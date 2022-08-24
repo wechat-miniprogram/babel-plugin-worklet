@@ -1,0 +1,23 @@
+{
+  "name": "babel-plugin-worklet",
+  "version": "0.0.1",
+  "description": "Compile worklet function in miniprogram",
+  "main": "src/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wechat-miniprogram/babel-plugin-worklet.git"
+  },
+  "keywords": [
+    "miniprogram",
+    "worklet"
+  ],
+  "author": "sanford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wechat-miniprogram/babel-plugin-worklet/issues"
+  },
+  "homepage": "https://github.com/wechat-miniprogram/babel-plugin-worklet#readme"
+}
