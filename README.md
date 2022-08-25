@@ -15,6 +15,9 @@ module.exports = {
   ],
   plugins: [
     ...
+    '@babel/plugin-transform-arrow-functions',
+    '@babel/plugin-transform-shorthand-properties',
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
     'babel-plugin-worklet',
   ],
 };
