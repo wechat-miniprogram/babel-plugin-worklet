@@ -1,8 +1,8 @@
 {
   "name": "babel-plugin-worklet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Compile worklet function in miniprogram",
-  "main": "src/index",
+  "main": "lib/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/wechat-miniprogram/babel-plugin-worklet/issues"
   },
-  "homepage": "https://github.com/wechat-miniprogram/babel-plugin-worklet#readme"
+  "homepage": "https://github.com/wechat-miniprogram/babel-plugin-worklet#readme",
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-transform-arrow-functions": "^7.18.6",
+    "@babel/plugin-transform-shorthand-properties": "^7.18.6",
+    "string-hash-64": "^1.0.3"
+  }
 }

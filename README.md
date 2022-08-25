@@ -8,15 +8,15 @@ Compile worklet function in wecht miniprogram.
 
 Add plugin to your babel.config.js:
 
-```json
+```js
 module.exports = {
-    presets: [
-      ...
-    ],
-    plugins: [
-      ...
-      'babel-plugin-worklet',
-    ],
-  };
+  presets: [
+    ...
+  ],
+  plugins: [
+    ...
+    'babel-plugin-worklet',
+  ],
+};
 ```
 
