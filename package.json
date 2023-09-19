@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-worklet",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Compile worklet function in miniprogram",
   "main": "lib/index",
   "scripts": {
