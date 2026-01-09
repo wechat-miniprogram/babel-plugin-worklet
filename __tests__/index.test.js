@@ -274,4 +274,49 @@ function myWorklet() {
       expect(transform(input)).toMatchSnapshot()
     })
   })
+
+  describe('real world usage', () => {
+    test('should handle shared, derived and runOnUI pattern', () => {
+      const input = `const offset = shared(1)
+const func = () => {
+  'worklet';
+  offset.value = 2
+}
+const offset2 = derived(() => {
+  'worklet';
+  return offset.value * 2
+})
+runOnUI(() => {
+  'worklet';
+  func()
+})`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('should handle component options with worklet methods', () => {
+      const input = `const option = {
+  onload() {
+    this.offset = shared(1)
+  },
+ 
+  methods: {
+    handleGesture(evt) {
+      'worklet';
+      runOnJs(this.bar.bind(this))()
+      this.foo()
+    },
+
+    bar() {
+      this.offset = 2
+    },
+
+    foo(evt) {
+      'worklet';
+      this.offset.value = evt.translateY
+    }
+  }
+};`
+      expect(transform(input)).toMatchSnapshot()
+    })
+  })
 })

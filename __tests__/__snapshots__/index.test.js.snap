@@ -299,6 +299,73 @@ exports[`babel-plugin-worklet object property worklet should generate factory fo
 };"
 `;
 
+exports[`babel-plugin-worklet real world usage should handle component options with worklet methods 1`] = `
+"const option = {
+  onload() {
+    this.offset = shared(1);
+  },
+  methods: {
+    handleGesture(evt) {
+      'worklet';
+
+      runOnJs(this.bar.bind(this))();
+      this.foo();
+    },
+    bar() {
+      this.offset = 2;
+    },
+    foo(evt) {
+      'worklet';
+
+      this.offset.value = evt.translateY;
+    }
+  }
+};"
+`;
+
+exports[`babel-plugin-worklet real world usage should handle shared, derived and runOnUI pattern 1`] = `
+"const offset = shared(1);
+const func = function () {
+  const _f = function () {
+    offset.value = 2;
+  };
+  _f._closure = {
+    offset
+  };
+  _f.asString = "function _f(){const{offset}=jsThis._closure;{offset.value=2;}}";
+  _f.__workletHash = 12972093810006;
+  _f.__location = "../test.js (2:13)";
+  _f.__worklet = true;
+  return _f;
+}();
+const offset2 = derived(function () {
+  const _f = function () {
+    return offset.value * 2;
+  };
+  _f._closure = {
+    offset
+  };
+  _f.asString = "function _f(){const{offset}=jsThis._closure;{return offset.value*2;}}";
+  _f.__workletHash = 1164286910923;
+  _f.__location = "../test.js (6:24)";
+  _f.__worklet = true;
+  return _f;
+}());
+runOnUI(function () {
+  const _f = function () {
+    func();
+  };
+  _f._closure = {
+    func
+  };
+  _f.asString = "function _f(){const{func}=jsThis._closure;{func();}}";
+  _f.__workletHash = 14059708939421;
+  _f.__location = "../test.js (10:8)";
+  _f.__worklet = true;
+  return _f;
+}());"
+`;
+
 exports[`babel-plugin-worklet should not transform functions without worklet directive normal arrow function should remain unchanged 1`] = `
 "const normalFunc = () => {
   return 42;
