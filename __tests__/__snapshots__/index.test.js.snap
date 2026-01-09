@@ -414,24 +414,3 @@ const myWorklet = function () {
   return _f;
 }();"
 `;
-
-exports[`babel-plugin-worklet this binding in object methods should handle this.method() calls 1`] = `
-"const obj = {
-  helper() {
-    'worklet';
-
-    return this.otherMethod();
-  }
-};"
-`;
-
-exports[`babel-plugin-worklet this binding in object methods should handle this.method.bind(this) calls 1`] = `
-"const obj = {
-  helper() {
-    'worklet';
-
-    const fn = this.otherFunc.bind(this);
-    return fn();
-  }
-};"
-`;

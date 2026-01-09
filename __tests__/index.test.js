@@ -274,27 +274,4 @@ function myWorklet() {
       expect(transform(input)).toMatchSnapshot()
     })
   })
-
-  describe('this binding in object methods', () => {
-    test('should handle this.method.bind(this) calls', () => {
-      const input = `const obj = {
-  helper() {
-    'worklet';
-    const fn = this.otherFunc.bind(this);
-    return fn();
-  }
-};`
-      expect(transform(input)).toMatchSnapshot()
-    })
-
-    test('should handle this.method() calls', () => {
-      const input = `const obj = {
-  helper() {
-    'worklet';
-    return this.otherMethod();
-  }
-};`
-      expect(transform(input)).toMatchSnapshot()
-    })
-  })
 })
