@@ -4,7 +4,7 @@
   "description": "Compile worklet function in miniprogram",
   "main": "lib/index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,9 +21,15 @@
   },
   "homepage": "https://github.com/wechat-miniprogram/babel-plugin-worklet#readme",
   "devDependencies": {
+    "@babel/core": "^7.28.5",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/plugin-transform-arrow-functions": "^7.18.6",
     "@babel/plugin-transform-shorthand-properties": "^7.18.6",
+    "@babel/plugin-transform-template-literals": "^7.27.1",
+    "@babel/preset-typescript": "^7.28.5",
+    "jest": "^30.2.0",
     "string-hash-64": "^1.0.3"
   }
 }

@@ -1,0 +1,464 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`babel-plugin-worklet basic worklet function transformation should transform arrow function with worklet directive 1`] = `
+"const myWorklet = function () {
+  const _f = function () {
+    return 42;
+  };
+  _f._closure = {};
+  _f.asString = "function _f(){return 42;}";
+  _f.__workletHash = 16000069324620;
+  _f.__location = "../test.js (1:18)";
+  _f.__worklet = true;
+  return _f;
+}();"
+`;
+
+exports[`babel-plugin-worklet basic worklet function transformation should transform function declaration with worklet directive 1`] = `
+"function myWorklet() {
+  return 42;
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet(){return 42;}",
+  __workletHash: 9856503641981,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet basic worklet function transformation should transform function expression with worklet directive 1`] = `
+"const myWorklet = function () {
+  const _f = function () {
+    return 42;
+  };
+  _f._closure = {};
+  _f.asString = "function _f(){return 42;}";
+  _f.__workletHash = 16000069324620;
+  _f.__location = "../test.js (1:18)";
+  _f.__worklet = true;
+  return _f;
+}();"
+`;
+
+exports[`babel-plugin-worklet basic worklet function transformation should transform named function expression with worklet directive 1`] = `
+"const myWorklet = function () {
+  const _f = function () {
+    return 42;
+  };
+  _f._closure = {};
+  _f.asString = "function namedFunc(){return 42;}";
+  _f.__workletHash = 8194838852680;
+  _f.__location = "../test.js (1:18)";
+  _f.__worklet = true;
+  return _f;
+}();"
+`;
+
+exports[`babel-plugin-worklet closure variable capture should capture multiple external variables 1`] = `
+"const a = 1;
+const b = 2;
+function myWorklet() {
+  return a + b;
+}
+Object.assign(myWorklet, {
+  _closure: {
+    a,
+    b
+  },
+  asString: "function myWorklet(){const{a,b}=jsThis._closure;{return a+b;}}",
+  __workletHash: 7586383649504,
+  __location: "../test.js (3:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet closure variable capture should capture object property access 1`] = `
+"const obj = {
+  value: 10
+};
+function myWorklet() {
+  return obj.value;
+}
+Object.assign(myWorklet, {
+  _closure: {
+    obj
+  },
+  asString: "function myWorklet(){const{obj}=jsThis._closure;{return obj.value;}}",
+  __workletHash: 11513419606786,
+  __location: "../test.js (2:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet closure variable capture should capture single external variable 1`] = `
+"const x = 10;
+function myWorklet() {
+  return x + 1;
+}
+Object.assign(myWorklet, {
+  _closure: {
+    x
+  },
+  asString: "function myWorklet(){const{x}=jsThis._closure;{return x+1;}}",
+  __workletHash: 15645308083485,
+  __location: "../test.js (2:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet closure variable capture should not capture function parameters 1`] = `
+"function myWorklet(x, y) {
+  return x + y;
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet(x,y){return x+y;}",
+  __workletHash: 12411739907900,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet closure variable capture should not capture global variables 1`] = `
+"function myWorklet() {
+  console.log(Math.PI);
+  return Date.now();
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet(){console.log(Math.PI);return Date.now();}",
+  __workletHash: 242891576374,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet complex scenarios should handle .value assignment 1`] = `
+"const sharedValue = {
+  value: 0
+};
+function myWorklet() {
+  sharedValue.value = 100;
+}
+Object.assign(myWorklet, {
+  _closure: {
+    sharedValue
+  },
+  asString: "function myWorklet(){const{sharedValue}=jsThis._closure;{sharedValue.value=100;}}",
+  __workletHash: 15318093166788,
+  __location: "../test.js (2:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet complex scenarios should handle function with default parameters 1`] = `
+"function myWorklet(x = 10) {
+  return x * 2;
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet(x=10){return x*2;}",
+  __workletHash: 8506619698271,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet complex scenarios should handle function with rest parameters 1`] = `
+"function myWorklet(...args) {
+  return args.length;
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet(...args){return args.length;}",
+  __workletHash: 130556365703,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet complex scenarios should handle multiple worklet functions 1`] = `
+"function worklet1() {
+  return 1;
+}
+Object.assign(worklet1, {
+  _closure: {},
+  asString: "function worklet1(){return 1;}",
+  __workletHash: 6245207069967,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});
+function worklet2() {
+  return 2;
+}
+Object.assign(worklet2, {
+  _closure: {},
+  asString: "function worklet2(){return 2;}",
+  __workletHash: 3020052792815,
+  __location: "../test.js (5:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet custom globals should capture external variable when not configured as global 1`] = `
+"function myWorklet() {
+  return customGlobal + 1;
+}
+Object.assign(myWorklet, {
+  _closure: {
+    customGlobal
+  },
+  asString: "function myWorklet(){const{customGlobal}=jsThis._closure;{return customGlobal+1;}}",
+  __workletHash: 14087757132861,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet custom globals should not capture variable when configured as global 1`] = `
+"function myWorklet() {
+  return customGlobal + 1;
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet(){return customGlobal+1;}",
+  __workletHash: 14354558759161,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet nested functions should handle worklet with inner function 1`] = `
+"function outer() {
+  function inner() {
+    return 1;
+  }
+  return inner();
+}
+Object.assign(outer, {
+  _closure: {},
+  asString: "function outer(){function inner(){return 1;}return inner();}",
+  __workletHash: 6466997960846,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet object property worklet should generate factory for arrow function in object property 1`] = `
+"const obj = {
+  myMethod: () => {
+    return 42;
+  },
+  _myMethod_worklet_factory_: function () {
+    var f = function () {
+      const _f = function () {
+        return 42;
+      };
+      _f._closure = {};
+      _f.asString = "function _f(){return 42;}";
+      _f.__workletHash = 16000069324620;
+      _f.__location = "../test.js";
+      _f.__worklet = true;
+      return _f;
+    }();
+    return f;
+  }
+};"
+`;
+
+exports[`babel-plugin-worklet object property worklet should generate factory for function expression in object property 1`] = `
+"const obj = {
+  myMethod: function () {
+    return 42;
+  },
+  _myMethod_worklet_factory_: function () {
+    var f = function () {
+      const _f = function () {
+        return 42;
+      };
+      _f._closure = {};
+      _f.asString = "function _f(){return 42;}";
+      _f.__workletHash = 16000069324620;
+      _f.__location = "../test.js";
+      _f.__worklet = true;
+      return _f;
+    }();
+    return f;
+  }
+};"
+`;
+
+exports[`babel-plugin-worklet object property worklet should generate factory for object method 1`] = `
+"const obj = {
+  myMethod() {
+    'worklet';
+
+    return 42;
+  }
+};"
+`;
+
+exports[`babel-plugin-worklet real world usage should handle component options with worklet methods 1`] = `
+"const option = {
+  onload() {
+    this.offset = shared(1);
+  },
+  methods: {
+    handleGesture(evt) {
+      'worklet';
+
+      runOnJs(this.bar.bind(this))();
+      this.foo();
+    },
+    bar() {
+      this.offset = 2;
+    },
+    foo(evt) {
+      'worklet';
+
+      this.offset.value = evt.translateY;
+    }
+  }
+};"
+`;
+
+exports[`babel-plugin-worklet real world usage should handle shared, derived and runOnUI pattern 1`] = `
+"const offset = shared(1);
+const func = function () {
+  const _f = function () {
+    offset.value = 2;
+  };
+  _f._closure = {
+    offset
+  };
+  _f.asString = "function _f(){const{offset}=jsThis._closure;{offset.value=2;}}";
+  _f.__workletHash = 12972093810006;
+  _f.__location = "../test.js (2:13)";
+  _f.__worklet = true;
+  return _f;
+}();
+const offset2 = derived(function () {
+  const _f = function () {
+    return offset.value * 2;
+  };
+  _f._closure = {
+    offset
+  };
+  _f.asString = "function _f(){const{offset}=jsThis._closure;{return offset.value*2;}}";
+  _f.__workletHash = 1164286910923;
+  _f.__location = "../test.js (6:24)";
+  _f.__worklet = true;
+  return _f;
+}());
+runOnUI(function () {
+  const _f = function () {
+    func();
+  };
+  _f._closure = {
+    func
+  };
+  _f.asString = "function _f(){const{func}=jsThis._closure;{func();}}";
+  _f.__workletHash = 14059708939421;
+  _f.__location = "../test.js (10:8)";
+  _f.__worklet = true;
+  return _f;
+}());"
+`;
+
+exports[`babel-plugin-worklet should not transform functions without worklet directive normal arrow function should remain unchanged 1`] = `
+"const normalFunc = () => {
+  return 42;
+};"
+`;
+
+exports[`babel-plugin-worklet should not transform functions without worklet directive normal function declaration should remain unchanged 1`] = `
+"function normalFunc() {
+  return 42;
+}"
+`;
+
+exports[`babel-plugin-worklet should not transform functions without worklet directive normal function expression should remain unchanged 1`] = `
+"const normalFunc = function () {
+  return 42;
+};"
+`;
+
+exports[`babel-plugin-worklet special syntax support should support array destructuring parameters 1`] = `
+"function myWorklet([a, b]) {
+  return a + b;
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet([a,b]){return a+b;}",
+  __workletHash: 8542270735258,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet special syntax support should support destructuring parameters 1`] = `
+"function myWorklet({
+  a,
+  b
+}) {
+  return a + b;
+}
+Object.assign(myWorklet, {
+  _closure: {},
+  asString: "function myWorklet({a:a,b:b}){return a+b;}",
+  __workletHash: 7278292966937,
+  __location: "../test.js (1:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet special syntax support should support nullish coalescing 1`] = `
+"const val = null;
+function myWorklet() {
+  return val ?? 'default';
+}
+Object.assign(myWorklet, {
+  _closure: {
+    val
+  },
+  asString: "function myWorklet(){const{val}=jsThis._closure;{var _val;return(_val=val)!==null&&_val!==void 0?_val:'default';}}",
+  __workletHash: 1668571165844,
+  __location: "../test.js (2:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet special syntax support should support optional chaining 1`] = `
+"const obj = {
+  a: 1
+};
+function myWorklet() {
+  return obj?.a;
+}
+Object.assign(myWorklet, {
+  _closure: {
+    obj
+  },
+  asString: "function myWorklet(){const{obj}=jsThis._closure;{var _obj;return(_obj=obj)===null||_obj===void 0?void 0:_obj.a;}}",
+  __workletHash: 6861070889044,
+  __location: "../test.js (2:0)",
+  __worklet: true
+});"
+`;
+
+exports[`babel-plugin-worklet special syntax support should support template literals 1`] = `
+"const name = 'world';
+function myWorklet() {
+  return \`hello \${name}\`;
+}
+Object.assign(myWorklet, {
+  _closure: {
+    name
+  },
+  asString: "function myWorklet(){const{name}=jsThis._closure;{return\\"hello \\"+name;}}",
+  __workletHash: 14215567640686,
+  __location: "../test.js (2:0)",
+  __worklet: true
+});"
+`;
