@@ -6,7 +6,14 @@ const plugin = require('../lib/index')
 function transform(code, filename = 'test.js') {
   const result = babel.transformSync(code, {
     filename,
-    plugins: [plugin],
+    plugins: [
+      '@babel/plugin-transform-shorthand-properties',
+      '@babel/plugin-transform-arrow-functions',
+      '@babel/plugin-proposal-optional-chaining',
+      '@babel/plugin-proposal-nullish-coalescing-operator',
+      ['@babel/plugin-transform-template-literals', { loose: true }],
+      plugin
+    ],
     babelrc: false,
     configFile: false,
   })
@@ -316,6 +323,21 @@ runOnUI(() => {
     }
   }
 };`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('worklet string test', () => {
+      const input = `
+Component({
+  attached() {
+    this.applyAnimatedStyle('.tab-border', () => {
+      'worklet'
+      return {
+        transform: "translateX(" + this._translateX.value + "px) scaleX(" + this._scaleX.value +")",
+      }
+    })
+  }
+})`;
       expect(transform(input)).toMatchSnapshot()
     })
   })

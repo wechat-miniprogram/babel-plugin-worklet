@@ -28,7 +28,6 @@
     "@babel/plugin-transform-arrow-functions": "^7.18.6",
     "@babel/plugin-transform-shorthand-properties": "^7.18.6",
     "@babel/plugin-transform-template-literals": "^7.27.1",
-    "@babel/preset-typescript": "^7.28.5",
     "jest": "^30.2.0",
     "string-hash-64": "^1.0.3"
   }
