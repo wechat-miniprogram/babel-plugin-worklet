@@ -480,8 +480,8 @@ exports[`babel-plugin-worklet special syntax support should support destructurin
 }
 Object.assign(myWorklet, {
   _closure: {},
-  asString: "function myWorklet({a,b}){return a+b;}",
-  __workletHash: 4006015745242,
+  asString: "function myWorklet({a:a,b:b}){return a+b;}",
+  __workletHash: 7278292966937,
   __location: "../test.js (1:0)",
   __worklet: true
 });"
@@ -496,8 +496,8 @@ Object.assign(myWorklet, {
   _closure: {
     val: val
   },
-  asString: "function myWorklet(){const{val}=jsThis._closure;{return val??'default';}}",
-  __workletHash: 10018503435660,
+  asString: "function myWorklet(){const{val}=jsThis._closure;{return val!==null&&val!==void 0?val:'default';}}",
+  __workletHash: 15855212975894,
   __location: "../test.js (2:0)",
   __worklet: true
 });"
@@ -514,8 +514,8 @@ Object.assign(myWorklet, {
   _closure: {
     obj: obj
   },
-  asString: "function myWorklet(){const{obj}=jsThis._closure;{return obj?.a;}}",
-  __workletHash: 14722602171703,
+  asString: "function myWorklet(){const{obj}=jsThis._closure;{return obj===null||obj===void 0?void 0:obj.a;}}",
+  __workletHash: 8823348337398,
   __location: "../test.js (2:0)",
   __worklet: true
 });"
@@ -530,8 +530,8 @@ Object.assign(myWorklet, {
   _closure: {
     name: name
   },
-  asString: "function myWorklet(){const{name}=jsThis._closure;{return\`hello \${name}\`;}}",
-  __workletHash: 1788509967367,
+  asString: "function myWorklet(){const{name}=jsThis._closure;{return\\"hello \\"+name;}}",
+  __workletHash: 14215567640686,
   __location: "../test.js (2:0)",
   __worklet: true
 });"
