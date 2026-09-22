@@ -55,6 +55,208 @@ exports[`babel-plugin-worklet basic worklet function transformation should trans
 }();"
 `;
 
+exports[`babel-plugin-worklet bound this capture should leave non-bind captures untouched 1`] = `
+"const plain = function () {
+  return 1;
+};
+const w = function () {
+  const _f = function () {
+    plain();
+  };
+  _f._closure = {
+    plain: plain
+  };
+  _f.asString = "function _f(){const{plain}=jsThis._closure;{plain();}}";
+  _f.__workletHash = 14850952642173;
+  _f.__location = "../test.js (2:10)";
+  _f.__worklet = true;
+  return _f;
+}();"
+`;
+
+exports[`babel-plugin-worklet bound this capture should not annotate a bound function no worklet captures 1`] = `
+"Component({
+  methods: {
+    onTap: function () {
+      const unused = this.other.bind(this);
+      const bump = this.bumpCount.bind(this);
+      bump.__boundThis = this;
+      const foo = function () {
+        const _f = function () {
+          runOnJS(bump)();
+        };
+        _f._closure = {
+          runOnJS: runOnJS,
+          bump: bump
+        };
+        _f.asString = "function _f(){const{runOnJS,bump}=jsThis._closure;{runOnJS(bump)();}}";
+        _f.__workletHash = 13683337897232;
+        _f.__location = "../test.js (6:18)";
+        _f.__worklet = true;
+        return _f;
+      }();
+      unused();
+      foo();
+    }
+  }
+});"
+`;
+
+exports[`babel-plugin-worklet bound this capture should not annotate binds in a file with no worklet 1`] = `
+"Component({
+  methods: {
+    onTap: function () {
+      const g = this.h.bind(this);
+      g();
+    }
+  }
+});"
+`;
+
+exports[`babel-plugin-worklet bound this capture should record __boundThis for partially applied bind 1`] = `
+"Component({
+  methods: {
+    onTap: function () {
+      const p = this.handler.bind(this, 1, 2);
+      p.__boundThis = this;
+      const w = function () {
+        const _f = function () {
+          runOnJS(p)();
+        };
+        _f._closure = {
+          runOnJS: runOnJS,
+          p: p
+        };
+        _f.asString = "function _f(){const{runOnJS,p}=jsThis._closure;{runOnJS(p)();}}";
+        _f.__workletHash = 3019972919824;
+        _f.__location = "../test.js (5:16)";
+        _f.__worklet = true;
+        return _f;
+      }();
+      w();
+    }
+  }
+});"
+`;
+
+exports[`babel-plugin-worklet bound this capture should record __boundThis on captured free bound function 1`] = `
+"Component({
+  methods: {
+    onTap: function () {
+      const bump = this.bumpCount.bind(this);
+      bump.__boundThis = this;
+      const foo = function () {
+        const _f = function () {
+          runOnJS(bump)();
+        };
+        _f._closure = {
+          runOnJS: runOnJS,
+          bump: bump
+        };
+        _f.asString = "function _f(){const{runOnJS,bump}=jsThis._closure;{runOnJS(bump)();}}";
+        _f.__workletHash = 13683337897232;
+        _f.__location = "../test.js (5:18)";
+        _f.__worklet = true;
+        return _f;
+      }();
+      foo();
+    }
+  }
+});"
+`;
+
+exports[`babel-plugin-worklet bound this capture should record __boundThis on factory generated bind 1`] = `
+"const option = {
+  methods: {
+    handleGesture: function (evt) {
+      runOnJs(this.bar.bind(this))();
+    },
+    _handleGesture_worklet_factory_: function () {
+      var _bar_ = this.bar.bind(this);
+      _bar_.__boundThis = this;
+      var f = function () {
+        const _f = function (evt) {
+          runOnJs(_bar_)();
+        };
+        _f._closure = {
+          runOnJs: runOnJs,
+          _bar_: _bar_
+        };
+        _f.asString = "function _f(evt){const{runOnJs,_bar_}=jsThis._closure;{runOnJs(_bar_)();}}";
+        _f.__workletHash = 10379448817559;
+        _f.__location = "../test.js";
+        _f.__worklet = true;
+        return _f;
+      }();
+      return f;
+    },
+    bar: function () {
+      this.offset = 2;
+    }
+  }
+};"
+`;
+
+exports[`babel-plugin-worklet bound this capture should record __boundThis once when two worklets capture it 1`] = `
+"Component({
+  methods: {
+    onTap: function () {
+      const bump = this.bumpCount.bind(this);
+      bump.__boundThis = this;
+      const a = function () {
+        const _f = function () {
+          runOnJS(bump)();
+        };
+        _f._closure = {
+          runOnJS: runOnJS,
+          bump: bump
+        };
+        _f.asString = "function _f(){const{runOnJS,bump}=jsThis._closure;{runOnJS(bump)();}}";
+        _f.__workletHash = 13683337897232;
+        _f.__location = "../test.js (5:16)";
+        _f.__worklet = true;
+        return _f;
+      }();
+      const b = function () {
+        const _f = function () {
+          runOnJS(bump)();
+        };
+        _f._closure = {
+          runOnJS: runOnJS,
+          bump: bump
+        };
+        _f.asString = "function _f(){const{runOnJS,bump}=jsThis._closure;{runOnJS(bump)();}}";
+        _f.__workletHash = 13683337897232;
+        _f.__location = "../test.js (6:16)";
+        _f.__worklet = true;
+        return _f;
+      }();
+      a();
+      b();
+    }
+  }
+});"
+`;
+
+exports[`babel-plugin-worklet bound this capture should record the bound receiver even when it is not this 1`] = `
+"const other = {};
+const g = someFn.bind(other);
+g.__boundThis = other;
+const w = function () {
+  const _f = function () {
+    g();
+  };
+  _f._closure = {
+    g: g
+  };
+  _f.asString = "function _f(){const{g}=jsThis._closure;{g();}}";
+  _f.__workletHash = 86407458941;
+  _f.__location = "../test.js (3:10)";
+  _f.__worklet = true;
+  return _f;
+}();"
+`;
+
 exports[`babel-plugin-worklet closure variable capture should capture multiple external variables 1`] = `
 "const a = 1;
 const b = 2;
@@ -323,6 +525,7 @@ exports[`babel-plugin-worklet real world usage should handle component options w
     },
     _handleGesture_worklet_factory_: function () {
       var _bar_ = this.bar.bind(this);
+      _bar_.__boundThis = this;
       var foo = this._foo_worklet_factory_();
       var f = function () {
         const _f = function (evt) {

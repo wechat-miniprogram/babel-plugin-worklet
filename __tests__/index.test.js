@@ -282,6 +282,121 @@ function myWorklet() {
     })
   })
 
+  describe('bound this capture', () => {
+    test('should record __boundThis on factory generated bind', () => {
+      const input = `const option = {
+  methods: {
+    handleGesture(evt) {
+      'worklet';
+      runOnJs(this.bar.bind(this))()
+    },
+
+    bar() {
+      this.offset = 2
+    }
+  }
+};`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('should record __boundThis on captured free bound function', () => {
+      const input = `Component({
+  methods: {
+    onTap() {
+      const bump = this.bumpCount.bind(this)
+      const foo = () => {
+        'worklet'
+        runOnJS(bump)()
+      }
+      foo()
+    }
+  }
+})`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('should record the bound receiver even when it is not this', () => {
+      const input = `const other = {};
+const g = someFn.bind(other);
+const w = () => {
+  'worklet';
+  g()
+};`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('should record __boundThis once when two worklets capture it', () => {
+      const input = `Component({
+  methods: {
+    onTap() {
+      const bump = this.bumpCount.bind(this)
+      const a = () => { 'worklet'; runOnJS(bump)() }
+      const b = () => { 'worklet'; runOnJS(bump)() }
+      a(); b()
+    }
+  }
+})`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('should record __boundThis for partially applied bind', () => {
+      const input = `Component({
+  methods: {
+    onTap() {
+      const p = this.handler.bind(this, 1, 2)
+      const w = () => { 'worklet'; runOnJS(p)() }
+      w()
+    }
+  }
+})`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('should leave non-bind captures untouched', () => {
+      const input = `const plain = () => 1;
+const w = () => {
+  'worklet';
+  plain()
+};`
+      expect(transform(input)).toMatchSnapshot()
+    })
+
+    test('should not annotate a bound function no worklet captures', () => {
+      const input = `Component({
+  methods: {
+    onTap() {
+      const unused = this.other.bind(this)
+      const bump = this.bumpCount.bind(this)
+      const foo = () => {
+        'worklet'
+        runOnJS(bump)()
+      }
+      unused()
+      foo()
+    }
+  }
+})`
+      const output = transform(input)
+      expect(output).toContain('bump.__boundThis = this;')
+      expect(output).not.toContain('unused.__boundThis')
+      expect(output).toMatchSnapshot()
+    })
+
+    test('should not annotate binds in a file with no worklet', () => {
+      const input = `Component({
+  methods: {
+    onTap() {
+      const g = this.h.bind(this)
+      g()
+    }
+  }
+})`
+      const output = transform(input)
+      expect(output).not.toContain('__boundThis')
+      expect(output).toMatchSnapshot()
+    })
+  })
+
   describe('real world usage', () => {
     test('should handle shared, derived and runOnUI pattern', () => {
       const input = `const offset = shared(1)
